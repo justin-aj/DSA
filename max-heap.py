@@ -15,7 +15,6 @@ def max_heapify(heap_list, i):
             heap_list[i], heap_list[right] = heap_list[right], heap_list[i]
         max_heapify(heap_list, largest)
 
-
 for i in range(len(heap_list) // 2 - 1, -1, -1):
     max_heapify(heap_list, i)
 
