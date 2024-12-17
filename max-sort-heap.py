@@ -1,27 +1,42 @@
 heap_list = [4, 1, 3, 2, 16, 9, 10, 14, 8, 7]
 
-def sort_heap(heap_list):
-    def max_heapify(heap_list, i):
+def heap_sort(heap_list):
+    def max_heapify(arr, n, i):
+        print(arr, n, i, "Heap")
         largest = i
-        left = (2 * i) + 1
-        right = (2 * i) + 2
-        if left < len(heap_list) and heap_list[left] > heap_list[largest]:
+        left = 2 * i + 1
+        right = 2 * i + 2
+
+        # Compare left child
+        if left < n and arr[left] > arr[largest]:
             largest = left
-        if right < len(heap_list) and heap_list[right] > heap_list[largest]:
+
+        # Compare right child
+        if right < n and arr[right] > arr[largest]:
             largest = right
+
+        # Swap and continue heapifying if root is not the largest
         if largest != i:
-            heap_list[i], heap_list[largest] = heap_list[largest], heap_list[i]
-            max_heapify(heap_list, largest)
+            arr[i], arr[largest] = arr[largest], arr[i]
+            max_heapify(arr, n, largest)
 
-    for i in range(len(heap_list) // 2 - 1, -1, -1):
-        max_heapify(heap_list, i)
+    n = len(heap_list)
 
-    return heap_list
+    # Step 1: Build a max-heap
+    for i in range(n // 2 - 1, -1, -1):
+        max_heapify(heap_list, n, i)
 
-sorted_heap = []
-for i in range(len(heap_list)):
-    first_element = sort_heap(heap_list)[0]
-    heap_list.remove(first_element)
-    sorted_heap.append(first_element)
+    # Step 2: Extract elements one by one
+    for i in range(n - 1, 0, -1):
+        print(heap_list[i], heap_list[0])
+        print(heap_list, "before")
+        # Swap the root (max element) with the last element
+        heap_list[i], heap_list[0] = heap_list[0], heap_list[i]
+        # Call max_heapify on the reduced heap
+        print(heap_list, "after")
+        max_heapify(heap_list, i, 0)
 
-print(sorted_heap)
+# Perform heap sort
+heap_sort(heap_list)
+
+print("Sorted list:", heap_list)
