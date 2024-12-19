@@ -7,7 +7,8 @@ def quicksort(arr):
         return arr
     else:
         print(arr, "arr")
-        rand = random.randint(1, len(arr) - 2)
+        rand = random.randint(0, len(arr) - 1)
+        print(rand, "rand")
         pivot = arr[rand]
         print(rand, pivot, "OK")
         print(arr[:rand], arr[rand + 1:])
