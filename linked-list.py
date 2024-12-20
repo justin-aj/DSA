@@ -35,22 +35,24 @@ class LinkedList:
 
     def delete(self, data):
         """Delete a node with the given data."""
+        if self.head is None:
+            return "List is Empty"
+
         current = self.head
-        if not current:
-            print("The list is empty.")
-            return
-        # If the node to delete is the head
-        print(current.data, current.next.data, current.next.next.data, current.next.next.next.data, "current")
         if current.data == data:
             self.head = current.next
-            return
-        # Traverse to find the node to delete
-        while current.next and current.next.data != data:
+
+        while current.next is not None:
+            # print(current.data, data, current.next.data)
+            if current.next.data == data:
+                current.next = current.next.next
+                return
             current = current.next
-        if current.next:  # Node found
-            current.next = current.next.next
-        else:
-            print(f"Node with data {data} not found.")
+            if current is None:
+                return
+            else:
+                print("Does not exist")
+                return
 
     def search(self, data):
         current = self.head
@@ -80,7 +82,8 @@ ll.insert_at_beginning(5)
 ll.display()  # Output: 5 -> 10 -> 20 -> 30 -> None
 
 # Delete a node
-#ll.delete(5)
+print("Delete")
+ll.delete(90)
 ll.display()  # Output: 5 -> 10 -> 30 -> None
 
 ll.search(20)
