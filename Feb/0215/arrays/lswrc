@@ -5,7 +5,6 @@ class Solution:
 
         left, right = 0, 0
         while right < len(s):
-
             if s[right] not in set_max:
                 set_max.add(s[right])
                 out_max = max(out_max, right - left + 1)
