@@ -1,0 +1,16 @@
+class Solution:
+    def topKFrequent(self, nums: List[int], k: int) -> List[int]:
+        hash_map = defaultdict(int)
+        for n in nums:
+            hash_map[n] += 1
+
+        li = [[] for _ in range(len(nums) + 1)]
+
+        for i, j in hash_map.items():
+            li[j].append(i)
+
+        res = []
+        for i in range(len(li) - 1, -1, -1):
+            res.extend(li[i])
+            if len(res) == k:
+                return res
