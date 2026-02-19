@@ -1,0 +1,42 @@
+class Solution:
+    def countSmaller(self, nums: List[int]) -> List[int]:
+        pairs = []
+        for i, n in enumerate(nums):
+            pairs.append((n, i))
+
+        count = []
+        for num in nums:
+            count.append(0)
+
+        def merge_sort(nums):
+            if len(nums) <= 1:
+                return nums
+
+            mid = len(nums) // 2
+            left_sort = merge_sort(nums[:mid])
+            right_sort = merge_sort(nums[mid:])
+
+            i, j = 0, 0
+            results_sorted = []
+            right_count = 0
+
+            while i < len(left_sort) and j < len(right_sort):
+                if left_sort[i][0] <= right_sort[j][0]:
+                    results_sorted.append(left_sort[i])
+                    count[left_sort[i][1]] += right_count
+                    i += 1
+                else:
+                    results_sorted.append(right_sort[j])
+                    right_count += 1
+                    j += 1
+
+            while i < len(left_sort):
+                count[left_sort[i][1]] += right_count
+                results_sorted.append(left_sort[i])
+                i += 1
+
+            results_sorted.extend(right_sort[j:])
+            return results_sorted
+
+        merge_sort(pairs)
+        return count

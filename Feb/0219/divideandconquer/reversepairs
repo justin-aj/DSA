@@ -1,0 +1,34 @@
+class Solution:
+    def reversePairs(self, nums: List[int]) -> int:
+        self.count = 0
+        def merge_sort(nums):
+            if len(nums) <= 1:
+                return nums
+
+            mid = len(nums) // 2
+            left_sort = merge_sort(nums[:mid])
+            right_sort = merge_sort(nums[mid:])
+
+            i, j = 0, 0
+            results = []
+
+            rp2 = 0
+            for rp1 in range(len(left_sort)):
+                while rp2 < len(right_sort) and left_sort[rp1] > 2 * right_sort[rp2]:
+                    rp2 += 1
+                self.count += rp2
+
+            while i < len(left_sort) and j < len(right_sort):
+                if left_sort[i] <= right_sort[j]:
+                    results.append(left_sort[i])
+                    i += 1
+                else:
+                    results.append(right_sort[j])
+                    j += 1
+
+            results.extend(left_sort[i:])
+            results.extend(right_sort[j:])
+            return results
+
+        merge_sort(nums)
+        return self.count
