@@ -1,0 +1,39 @@
+class Solution:
+    def countRangeSum(self, nums: List[int], lower: int, upper: int) -> int:
+        prefix = [0]
+        for n in nums:
+            prefix.append(prefix[-1] + n)
+
+        self.count = 0
+
+        def merge_sort(arr):
+            if len(arr) <= 1:
+                return arr
+
+            mid = len(arr) // 2
+            left_sort = merge_sort(arr[:mid])
+            right_sort = merge_sort(arr[mid:])
+
+            j1, j2 = 0, 0
+            for i in range(len(left_sort)):
+                while j1 < len(right_sort) and right_sort[j1] - left_sort[i] < lower:
+                    j1 += 1
+                while j2 < len(right_sort) and right_sort[j2] - left_sort[i] <= upper:
+                    j2 += 1
+                self.count += (j2 - j1)
+
+            result = []
+            i, j = 0, 0
+            while i < len(left_sort) and j < len(right_sort):
+                if left_sort[i] <= right_sort[j]:
+                    result.append(left_sort[i])
+                    i += 1
+                else:
+                    result.append(right_sort[j])
+                    j += 1
+            result.extend(left_sort[i:])
+            result.extend(right_sort[j:])
+            return result
+
+        merge_sort(prefix)
+        return self.count
